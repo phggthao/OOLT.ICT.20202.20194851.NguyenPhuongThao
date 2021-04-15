@@ -1,3 +1,5 @@
+package Lab04.AIMSproject.src;
+
 public class DigitalVideoDisc {
     private String title;
     private String category;
@@ -39,5 +41,8 @@ public class DigitalVideoDisc {
         this.director = director;
         this.length = length;
         this.cost = cost;
+    }
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

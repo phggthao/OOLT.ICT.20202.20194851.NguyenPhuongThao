@@ -1,3 +1,4 @@
+package Lab03.AIMSproject.src;
 public class Aims {
     public static void main(String[] args) {
         //Create a new order

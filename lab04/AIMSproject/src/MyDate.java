@@ -36,8 +36,8 @@ public class MyDate {
         this.year = now.getYear(); 
     }
 
-    public void print() { //print date in "MMMM dd yyyy" format
-        System.out.printf("Date: " + strDate);
+    public void print() { //print current date in "MMMM dd yyyy" format
+        System.out.printf(strDate);
     }
 
     public void chooseDateFormat() {
@@ -50,31 +50,31 @@ public class MyDate {
             case 1: {
                 sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String strDate = sdf.format(date);
-                System.out.printf("Date: " + strDate);
+                System.out.printf("Date: " + strDate + "\n");
                 break;}
         
             case 2: {
                 sdf = new SimpleDateFormat("d/M/yyyy");
                 String strDate = sdf.format(date);
-                System.out.printf("Date: " + strDate);
+                System.out.printf("Date: " + strDate + "\n");
                 break;}
 
             case 3: {
                 sdf = new SimpleDateFormat("dd-MMM-yyyy");
                 String strDate = sdf.format(date);
-                System.out.printf("Date: " + strDate);
+                System.out.printf("Date: " + strDate + "\n");
                 break;}
 
             case 4: {
                 sdf = new SimpleDateFormat("MMM d yyyy");
                 String strDate = sdf.format(date);
-                System.out.printf("Date: " + strDate);
+                System.out.printf("Date: " + strDate + "\n");
                 break;}
 
             case 5: {
-                sdf = new SimpleDateFormat("mm-dd-yyyy");
+                sdf = new SimpleDateFormat("MM-dd-yyyy");
                 String strDate = sdf.format(date);
-                System.out.printf("Date: " + strDate);
+                System.out.printf("Date: " + strDate + "\n");
                 break;}
 
             default: {

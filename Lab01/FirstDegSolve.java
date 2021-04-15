@@ -1,3 +1,4 @@
+package Lab01;
 //First Degree Equation Solver
 import javax.swing.JOptionPane;
 class FirstDegEq {

@@ -1,3 +1,4 @@
+package Lab01;
 //Second Degree Equation Solver
 import javax.swing.JOptionPane;
 
