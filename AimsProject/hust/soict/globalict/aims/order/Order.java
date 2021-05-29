@@ -13,7 +13,7 @@ public class Order {
     
     private MyDate dateOrdered = new MyDate();
 
-    public Order() {// not working
+    public Order() {
         if (nbOrders < MAX_LIMITED_ORDERS) nbOrders++;
         else {
             System.out.println("You have reached maximum number of orders!");
