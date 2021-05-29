@@ -98,8 +98,6 @@ public class Order {
             System.out.println("Delete DVD(s) to add new DVD(s) to current order.\n");
         }
     }
-    /*I prefer the method addDigitalVideoDisc with array parameter. 
-    It makes the code much shorter ==> time saving*/
 
     public void addDigitalVideoDisc(DigitalVideoDisc disc1,DigitalVideoDisc disc2) { //pass by 2 parameters
         if (qtyOrdered < MAX_NUMBERS_ORDERED) {
@@ -122,14 +120,19 @@ public class Order {
     }
 
     public void printOrder() {
+        DigitalVideoDisc luckyDisc = getALuckyItem();
+
         System.out.println("***********************Order Details***********************");
         System.out.printf("Date: ");
         dateOrdered.print();
         for (int i=0;i<qtyOrdered;i++) {
-            System.out.println((i+1) + ". DVD - " + itemsOrdered[i].getTitle() + ": $" + itemsOrdered[i].getCost());
+            System.out.print((i+1) + ". DVD - " + itemsOrdered[i].getTitle() + ": $" + itemsOrdered[i].getCost());
+            if (itemsOrdered[i] == luckyDisc)
+                System.out.print(" --> Free lucky item");
+            System.out.print("\n");
         }
         System.out.println("Total cost: $" + totalCost());
-        System.out.println("***************************************************\n");
+        System.out.println("***********************************************************\n");
     }
 
     public DigitalVideoDisc getALuckyItem() {
@@ -141,4 +144,4 @@ public class Order {
         this.freeDisc = itemsOrdered[luckyItemID].getCost();
         return itemsOrdered[luckyItemID];
     }
-}
+} 
