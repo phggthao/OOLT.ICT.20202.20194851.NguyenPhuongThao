@@ -1,19 +1,21 @@
 package hust.soict.globalict.aims.order;
 
-import hust.soict.globalict.aims.media.DigitalVideoDisc;
+import java.util.ArrayList;
+import java.util.Scanner;
+import hust.soict.globalict.aims.media.Media;
 import hust.soict.globalict.aims.utils.MyDate;
 
 public class Order {
     public static final int MAX_NUMBERS_ORDERED = 10; // max number of items in an order
     public static final int MAX_LIMITED_ORDERS = 5; // max number of orders
-    private DigitalVideoDisc[] itemsOrdered = new DigitalVideoDisc[MAX_NUMBERS_ORDERED];
-    private int qtyOrdered = 0;
+    private ArrayList<Media> itemsOrdered = new ArrayList<Media>();
     private static int nbOrders = 0;
-    float freeDisc = 0; 
+    float freeDisc = 0;
+    int count = 0; 
     
     private MyDate dateOrdered = new MyDate();
 
-    public Order() {// not working
+    public Order() {
         if (nbOrders < MAX_LIMITED_ORDERS) nbOrders++;
         else {
             System.out.println("You have reached maximum number of orders!");
@@ -21,113 +23,46 @@ public class Order {
             System.exit(0);
         }
     }
-
-    public void addDigitalVideoDisc(DigitalVideoDisc disc) { //add DVD
-        if (qtyOrdered < MAX_NUMBERS_ORDERED) {
-            itemsOrdered[qtyOrdered] = disc;
-            qtyOrdered++;
-            System.out.println("The disc has been added");
-            System.out.println("Current quantity: " + qtyOrdered + "\n");
+    
+    public void addMedia(Media m) {// add item to order
+        if (itemsOrdered.size() < MAX_NUMBERS_ORDERED) {
+            itemsOrdered.add(m);
+            System.out.println("Selected item has been added to order.");
+            System.out.println("Current quantity: " + itemsOrdered.size() + "\n");
         }
+
         else {
-            System.out.println("The order is full!");
-            System.out.println("Delete DVD(s) to add new DVD(s) to current order.\n");
+            System.out.println("The order is full.");
+            System.out.println("Delete item(s) to add new items to order.");
         }
     }
-    
-    public void removeDigitalVideoDisc(DigitalVideoDisc disc) { //remove DVD
-        if (qtyOrdered == 0) System.out.println("There is no disc to remove!\n");
+
+    public void removeMedia(Media m) {// remove item from order
+        if (itemsOrdered.size() == 0) System.out.println("Order is empty. Nothing to remove");
         else {
-            int j=0;
-            while (!disc.equals(itemsOrdered[j])){
-                j++;
-            }
-            for (int i=j;i<qtyOrdered-1;i++){
-                itemsOrdered[i]=itemsOrdered[i+1];
-            }
-            qtyOrdered--;
-            System.out.println("Selected DVD has been removed successfully!");
-            System.out.println("Current quantity: " + qtyOrdered + "\n");
+            itemsOrdered.remove(m);
+            System.out.println("Selected item has been removed from order.");
+            System.out.println("Current quantity: " + itemsOrdered.size() + "\n");
         }
     }
 
     public float totalCost() { //get the total cost of current order
         float total = 0;
-        for (int i=0;i<qtyOrdered;i++) {
-            total += itemsOrdered[i].getCost();
+        for (int i=0;i<itemsOrdered.size();i++) {
+            total += itemsOrdered.get(i).getCost();
         }
-        return (total-this.freeDisc);
-    }
-
-    public void addDigitalVideoDisc(DigitalVideoDisc [] dvdList) { //pass by array parameter
-        if (qtyOrdered + dvdList.length <= MAX_NUMBERS_ORDERED) {
-            for (int i=0;i<dvdList.length;i++){
-                itemsOrdered[qtyOrdered] = dvdList[i];
-                qtyOrdered++;
-                System.out.println("The DVD list has been added");
-                System.out.println("Current quantity: " + qtyOrdered + "\n");
-            }
-        }
-        else {
-            System.out.println("Cannot add DVD list to current order!");
-            System.out.println("Each order can only have maximum 10 DVDs!\n");
-        }
-    }
-
-    public void addDigitalVideoDisc(DigitalVideoDisc disc1,DigitalVideoDisc disc2,DigitalVideoDisc disc3) { //pass by 3 parameters
-        if (qtyOrdered < MAX_NUMBERS_ORDERED) {
-            itemsOrdered[qtyOrdered] = disc1;
-            qtyOrdered++;
-            System.out.println("The disc has been added");
-            System.out.println("Current quantity: " + qtyOrdered + "\n");
-        }
-        if (qtyOrdered < MAX_NUMBERS_ORDERED) {
-            itemsOrdered[qtyOrdered] = disc2;
-            qtyOrdered++;
-            System.out.println("The disc has been added");
-            System.out.println("Current quantity: " + qtyOrdered + "\n");
-        }
-        if (qtyOrdered < MAX_NUMBERS_ORDERED) {
-            itemsOrdered[qtyOrdered] = disc3;
-            qtyOrdered++;
-            System.out.println("The disc has been added");
-            System.out.println("Current quantity: " + qtyOrdered + "\n");
-        }
-        else {
-            System.out.println("The order is full!");
-            System.out.println("Delete DVD(s) to add new DVD(s) to current order.\n");
-        }
-    }
-
-    public void addDigitalVideoDisc(DigitalVideoDisc disc1,DigitalVideoDisc disc2) { //pass by 2 parameters
-        if (qtyOrdered < MAX_NUMBERS_ORDERED) {
-            itemsOrdered[qtyOrdered] = disc1;
-            qtyOrdered++;
-            System.out.println("The disc has been added");
-            System.out.println("Current quantity: " + qtyOrdered + "\n");
-        }
-        if (qtyOrdered < MAX_NUMBERS_ORDERED) {
-            itemsOrdered[qtyOrdered] = disc2;
-            qtyOrdered++;
-            System.out.println("The disc has been added");
-            System.out.println("Current quantity: " + qtyOrdered + "\n");
-        }
-        else {
-            System.out.println("The order is full!");
-            System.out.println("Cannot add the DVD named \"" + disc2.getTitle() + "\"");
-            System.out.println("Delete DVD(s) to add new DVD(s) to current order.\n");
-        }
+        return (total);
     }
 
     public void printOrder() {
-        DigitalVideoDisc luckyDisc = getALuckyItem();
+        Media luckyMedia = getALuckyItem();
 
         System.out.println("***********************Order Details***********************");
         System.out.printf("Date: ");
         dateOrdered.print();
-        for (int i=0;i<qtyOrdered;i++) {
-            System.out.print((i+1) + ". DVD - " + itemsOrdered[i].getTitle() + ": $" + itemsOrdered[i].getCost());
-            if (itemsOrdered[i] == luckyDisc)
+        for (int i=0;i<itemsOrdered.size();i++) {
+            System.out.print((i+1) + ". DVD - " + itemsOrdered.get(i).getTitle() + ": $" + itemsOrdered.get(i).getCost());
+            if (itemsOrdered.get(i) == luckyMedia)
                 System.out.print(" --> Free lucky item");
             System.out.print("\n");
         }
@@ -135,13 +70,27 @@ public class Order {
         System.out.println("***********************************************************\n");
     }
 
-    public DigitalVideoDisc getALuckyItem() {
+    public void search() {// search an item by title
+        Scanner scan = new Scanner(System.in);
+        System.out.print("Enter item title: ");
+        String titleInput = scan.next();
+        for (int i=0;i<itemsOrdered.size();i++) {
+            if (itemsOrdered.get(i).getTitle().contains(titleInput.toLowerCase())) {
+                count++;
+                System.out.println(itemsOrdered.get(i).getTitle());
+            }
+        }
+        System.out.println("~~ " + count + " result(s) found ~~");
+        scan.close();
+    }
+
+    public Media getALuckyItem() {
         int luckyItemID = 0;
         
-        if (qtyOrdered > 0) {
-            luckyItemID = (int) (Math.random() * qtyOrdered);
+        if (itemsOrdered.size() > 0) {
+            luckyItemID = (int) (Math.random() * itemsOrdered.size());
         }
-        this.freeDisc = itemsOrdered[luckyItemID].getCost();
-        return itemsOrdered[luckyItemID];
+        itemsOrdered.get(luckyItemID).setCost(this.freeDisc);
+        return itemsOrdered.get(luckyItemID);
     }
 } 
