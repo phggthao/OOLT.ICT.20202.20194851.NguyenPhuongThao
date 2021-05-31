@@ -6,22 +6,29 @@ import java.util.List;
 public class Book extends Media {
     private List<String> authors = new ArrayList<String>();
 
-    List<String> getAuthors() {
+    public List<String> getAuthors() {
         return authors;
     }
 
-    public Book(String title) {
-        super(title);
-    }
-
-    public Book(String title, String category) {
-        super(title, category);
-    }
-
-    public Book(String title, String category, List<String> authors) {
-        super(title, category);
+    public void setAuthors(List<String> authors) {
         this.authors = authors;
-        //TODO: check author condition
+    }
+
+    public Book(String id, String title) {
+        super(id, title);
+    }
+
+    public Book(String id, String title, String category) {
+        super(id, title, category);
+    }
+    
+    public Book(String id, String title, String category, float cost) {
+        super(id, title, category, cost);
+    }
+    
+    public Book(String id, String title, String category, float cost, List<String> authors) {
+        super(id, title, category, cost);
+        this.authors = authors;
     }
 
     void addAuthor(String authorName) {
@@ -30,7 +37,7 @@ public class Book extends Media {
         else System.out.println("This author's name has already been added to the list.");
     }
 
-    void  removeAuthor(String authorName) {
+    void removeAuthor(String authorName) {
         if (authors.contains(authorName)) authors.remove(authorName);
 
         else System.out.println("This author's name is not presented in the list.");

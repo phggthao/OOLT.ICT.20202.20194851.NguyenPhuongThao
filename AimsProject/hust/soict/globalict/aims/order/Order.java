@@ -1,7 +1,11 @@
 package hust.soict.globalict.aims.order;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+
+import hust.soict.globalict.aims.media.Book;
+import hust.soict.globalict.aims.media.DigitalVideoDisc;
 import hust.soict.globalict.aims.media.Media;
 import hust.soict.globalict.aims.utils.MyDate;
 
@@ -23,6 +27,10 @@ public class Order {
             System.exit(0);
         }
     }
+
+    public int orderSize() {
+        return itemsOrdered.size();
+    }
     
     public void addMedia(Media m) {// add item to order
         if (itemsOrdered.size() < MAX_NUMBERS_ORDERED) {
@@ -37,6 +45,45 @@ public class Order {
         }
     }
 
+    public Book addBook(Scanner scanInfo) {
+        System.out.print("ID: "); 
+        String id = scanInfo.nextLine();
+        System.out.print("Title: "); 
+        String title = scanInfo.nextLine();
+        System.out.print("Category: "); 
+        String category = scanInfo.nextLine();
+        System.out.print("Authors (separate by\',\'): "); 
+        String[] author = scanInfo.nextLine().split(",");
+        System.out.print("Cost (enter a float, e.g. \"12.34\"): ");
+        float cost = Float.parseFloat(scanInfo.nextLine());
+
+        List<String> authors = new ArrayList<String>();
+        for (String splitAuthor: author) {
+            authors.add(splitAuthor.trim());
+        }
+
+        Book book = new Book(id, title, category, cost, authors);
+        return book;
+    }
+
+    public DigitalVideoDisc addDVD(Scanner scanInfo) {
+        System.out.print("ID: "); 
+        String id = scanInfo.nextLine();
+        System.out.print("Title: "); 
+        String title = scanInfo.nextLine();
+        System.out.print("Category: "); 
+        String category = scanInfo.nextLine();
+        System.out.print("Director: "); 
+        String director = scanInfo.nextLine();
+        System.out.print("Length (enter an integer): ");
+        int length = Integer.parseInt(scanInfo.nextLine()); 
+        System.out.print("Cost (enter a float, e.g. \"12.34\"): ");
+        float cost = Float.parseFloat(scanInfo.nextLine());
+
+        DigitalVideoDisc dvd = new DigitalVideoDisc(id, title, category, cost, director, length);
+        return dvd;
+    }
+
     public void removeMedia(Media m) {// remove item from order
         if (itemsOrdered.size() == 0) System.out.println("Order is empty. Nothing to remove");
         else {
@@ -46,7 +93,22 @@ public class Order {
         }
     }
 
-    public float totalCost() { //get the total cost of current order
+    public void removeMediaByID(String mediaID) {// delete item by its ID
+        if (itemsOrdered.size() == 0) System.out.println("Order is empty. Nothing to remove");
+        else {
+            for (int i=0; i<itemsOrdered.size(); i++) {
+                if (itemsOrdered.get(i).getId().equalsIgnoreCase(mediaID)) {
+                    itemsOrdered.remove(i);
+                    System.out.println("Selected item has been removed from order.");
+                    break;
+                }
+            }
+            System.out.println("Cannot delete because item with ID \"" + mediaID + "\" has not been added to current order.");
+            System.out.println("Current quantity: " + itemsOrdered.size() + "\n");
+        }
+    }
+
+    public float totalCost() { // get the total cost of current order
         float total = 0;
         for (int i=0;i<itemsOrdered.size();i++) {
             total += itemsOrdered.get(i).getCost();
@@ -56,17 +118,18 @@ public class Order {
 
     public void printOrder() {
         Media luckyMedia = getALuckyItem();
+        float realTotalCost = totalCost() - luckyMedia.getCost();
 
         System.out.println("***********************Order Details***********************");
-        System.out.printf("Date: ");
-        dateOrdered.print();
+        System.out.printf("Date: "); dateOrdered.print();
+        System.out.println("ID\tTitle\t\t\t\tPrice");
         for (int i=0;i<itemsOrdered.size();i++) {
-            System.out.print((i+1) + ". DVD - " + itemsOrdered.get(i).getTitle() + ": $" + itemsOrdered.get(i).getCost());
+            System.out.print(itemsOrdered.get(i).getId()+ "\t" + itemsOrdered.get(i).getTitle() + "\t\t\t$" + itemsOrdered.get(i).getCost());
             if (itemsOrdered.get(i) == luckyMedia)
                 System.out.print(" --> Free lucky item");
             System.out.print("\n");
         }
-        System.out.println("Total cost: $" + totalCost());
+        System.out.println("Total cost: $" + realTotalCost);
         System.out.println("***********************************************************\n");
     }
 
@@ -84,13 +147,12 @@ public class Order {
         scan.close();
     }
 
-    public Media getALuckyItem() {
-        int luckyItemID = 0;
-        
-        if (itemsOrdered.size() > 0) {
-            luckyItemID = (int) (Math.random() * itemsOrdered.size());
+    public Media getALuckyItem() {// random a lucky item that user can get for free if their order had >= 3 items
+        if (itemsOrdered.size() >= 3) {
+            int luckyItemIndex = 0;
+            luckyItemIndex = (int) (Math.random() * itemsOrdered.size());
+            return itemsOrdered.get(luckyItemIndex);
         }
-        itemsOrdered.get(luckyItemID).setCost(this.freeDisc);
-        return itemsOrdered.get(luckyItemID);
+        return null;
     }
 } 

@@ -1,9 +1,18 @@
 package hust.soict.globalict.aims.media;
 
 public class Media {
+    protected String id;
     protected String title;
     protected String category;
     protected float cost;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -29,16 +38,22 @@ public class Media {
         this.cost = cost;
     }
 
-    public Media(String title) {
+    public Media() {
+    }
+
+    public Media(String id, String title) {
+        this.id = id;
         this.title = title;
     }
 
-    public Media(String title, String category) {
+    public Media(String id, String title, String category) {
+        this.id = id;
         this.title = title;
         this.category = category;
     }
 
-    public Media(String title, String category, float cost) {
+    public Media(String id, String title, String category, float cost) {
+        this.id = id;
         this.title = title;
         this.category = category;
         this.cost = cost;
