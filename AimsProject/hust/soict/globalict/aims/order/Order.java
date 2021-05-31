@@ -17,7 +17,7 @@ public class Order {
     float freeDisc = 0;
     int count = 0; 
     
-    private MyDate dateOrdered = new MyDate();
+    private MyDate dateOrdered = new MyDate(); 
 
     public Order() {
         if (nbOrders < MAX_LIMITED_ORDERS) nbOrders++;
