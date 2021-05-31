@@ -41,7 +41,6 @@ public class Aims {
                         System.out.println("--Adding items to the order..."); 
                         System.out.println("Small tip: You'll get a random lucky item for free if you order >= 3 items");
                         System.out.println("What kind of item do you want to add? (enter \'book\' or \'dvd\', case-insensitive)");
-                        //Scanner scanItem = new Scanner(System.in);
                         String item = scan.nextLine();
 
                         if (item.toLowerCase().equals("book")) {// if user want to add a book
@@ -53,17 +52,14 @@ public class Aims {
                         }
 
                         else System.out.println("ERROR: Wrong input!");
-                        //scanItem.close();
                         break;
                     }
 
                     case 3: {
                         System.out.println("--Deleting item by ID...");
                         System.out.print("Enter the ID of the item you want to delete from order: ");
-                        //Scanner scanID = new Scanner(System.in);
                         String deleteID = scan.nextLine();
                         newOrder.removeMediaByID(deleteID);
-                        //scanID.close();
                         break;
                     }
 
