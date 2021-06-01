@@ -32,14 +32,18 @@ public class Book extends Media {
     }
 
     void addAuthor(String authorName) {
-        if (!authors.contains(authorName)) authors.add(authorName);
-        
+        if (!authors.contains(authorName)) {
+            authors.add(authorName);
+            System.out.println("This author's name has been added successfully.");
+        }
         else System.out.println("This author's name has already been added to the list.");
     }
 
     void removeAuthor(String authorName) {
-        if (authors.contains(authorName)) authors.remove(authorName);
-
+        if (authors.contains(authorName)) {
+            authors.remove(authorName);
+            System.out.println("This author's name has been removed successfully.");
+        }
         else System.out.println("This author's name is not presented in the list.");
     }
 }
