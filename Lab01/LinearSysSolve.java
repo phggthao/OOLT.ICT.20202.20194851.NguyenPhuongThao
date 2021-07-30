@@ -1,4 +1,3 @@
-package hust.soict.globalict.Lab01;
 //Linear System (with 2 variables) Solver
 import javax.swing.JOptionPane;
 class LinearSys {

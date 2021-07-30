@@ -1,4 +1,3 @@
-package hust.soict.globalict.Lab01;
 //Second Degree Equation Solver
 import javax.swing.JOptionPane;
 
